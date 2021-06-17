@@ -10,8 +10,8 @@ using RegisterApp.DataAccess;
 namespace RegisterApp.Migrations
 {
     [DbContext(typeof(RegisterContext))]
-    [Migration("20210617114308_InitialDBCreatin")]
-    partial class InitialDBCreatin
+    [Migration("20210617123220_InitialDBCreation")]
+    partial class InitialDBCreation
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -28,13 +28,19 @@ namespace RegisterApp.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int?>("CountryId")
+                        .HasColumnType("int");
+
                     b.Property<int?>("RegisterId")
                         .HasColumnType("int");
 
                     b.Property<string>("cityName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CountryId");
 
                     b.HasIndex("RegisterId");
 
@@ -52,6 +58,7 @@ namespace RegisterApp.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("countryName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -69,6 +76,7 @@ namespace RegisterApp.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("EmailAdress")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("RegisterId")
@@ -89,12 +97,15 @@ namespace RegisterApp.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Password")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Surname")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -109,10 +120,20 @@ namespace RegisterApp.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int?>("CityId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("RegisterId")
+                        .HasColumnType("int");
+
                     b.Property<string>("stateName")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CityId");
+
+                    b.HasIndex("RegisterId");
 
                     b.ToTable("States");
                 });
@@ -128,6 +149,7 @@ namespace RegisterApp.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("telNumber")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -139,6 +161,10 @@ namespace RegisterApp.Migrations
 
             modelBuilder.Entity("RegisterApp.Models.City", b =>
                 {
+                    b.HasOne("RegisterApp.Models.Country", null)
+                        .WithMany("Cities")
+                        .HasForeignKey("CountryId");
+
                     b.HasOne("RegisterApp.Models.Register", null)
                         .WithMany("City")
                         .HasForeignKey("RegisterId");
@@ -158,11 +184,32 @@ namespace RegisterApp.Migrations
                         .HasForeignKey("RegisterId");
                 });
 
+            modelBuilder.Entity("RegisterApp.Models.State", b =>
+                {
+                    b.HasOne("RegisterApp.Models.City", null)
+                        .WithMany("States")
+                        .HasForeignKey("CityId");
+
+                    b.HasOne("RegisterApp.Models.Register", null)
+                        .WithMany("States")
+                        .HasForeignKey("RegisterId");
+                });
+
             modelBuilder.Entity("RegisterApp.Models.Telephone", b =>
                 {
                     b.HasOne("RegisterApp.Models.Register", null)
                         .WithMany("Telephone")
                         .HasForeignKey("RegisterId");
+                });
+
+            modelBuilder.Entity("RegisterApp.Models.City", b =>
+                {
+                    b.Navigation("States");
+                });
+
+            modelBuilder.Entity("RegisterApp.Models.Country", b =>
+                {
+                    b.Navigation("Cities");
                 });
 
             modelBuilder.Entity("RegisterApp.Models.Register", b =>
@@ -172,6 +219,8 @@ namespace RegisterApp.Migrations
                     b.Navigation("Country");
 
                     b.Navigation("EmailAdress");
+
+                    b.Navigation("States");
 
                     b.Navigation("Telephone");
                 });

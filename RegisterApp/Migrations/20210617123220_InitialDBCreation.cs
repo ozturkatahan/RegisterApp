@@ -2,7 +2,7 @@
 
 namespace RegisterApp.Migrations
 {
-    public partial class InitialDBCreatin : Migration
+    public partial class InitialDBCreation : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -12,46 +12,13 @@ namespace RegisterApp.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Surname = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Password = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Surname = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Register", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "States",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    stateName = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_States", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Cities",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    cityName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    RegisterId = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Cities", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Cities_Register_RegisterId",
-                        column: x => x.RegisterId,
-                        principalTable: "Register",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -60,7 +27,7 @@ namespace RegisterApp.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    countryName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    countryName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     RegisterId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -80,7 +47,7 @@ namespace RegisterApp.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    EmailAdress = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    EmailAdress = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     RegisterId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -100,7 +67,7 @@ namespace RegisterApp.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    telNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    telNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     RegisterId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -113,6 +80,65 @@ namespace RegisterApp.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "Cities",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    cityName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CountryId = table.Column<int>(type: "int", nullable: true),
+                    RegisterId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Cities", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Cities_Countries_CountryId",
+                        column: x => x.CountryId,
+                        principalTable: "Countries",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Cities_Register_RegisterId",
+                        column: x => x.RegisterId,
+                        principalTable: "Register",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "States",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    stateName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CityId = table.Column<int>(type: "int", nullable: true),
+                    RegisterId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_States", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_States_Cities_CityId",
+                        column: x => x.CityId,
+                        principalTable: "Cities",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_States_Register_RegisterId",
+                        column: x => x.RegisterId,
+                        principalTable: "Register",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Cities_CountryId",
+                table: "Cities",
+                column: "CountryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Cities_RegisterId",
@@ -130,6 +156,16 @@ namespace RegisterApp.Migrations
                 column: "RegisterId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_States_CityId",
+                table: "States",
+                column: "CityId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_States_RegisterId",
+                table: "States",
+                column: "RegisterId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Telephones_RegisterId",
                 table: "Telephones",
                 column: "RegisterId");
@@ -138,12 +174,6 @@ namespace RegisterApp.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Cities");
-
-            migrationBuilder.DropTable(
-                name: "Countries");
-
-            migrationBuilder.DropTable(
                 name: "Emails");
 
             migrationBuilder.DropTable(
@@ -151,6 +181,12 @@ namespace RegisterApp.Migrations
 
             migrationBuilder.DropTable(
                 name: "Telephones");
+
+            migrationBuilder.DropTable(
+                name: "Cities");
+
+            migrationBuilder.DropTable(
+                name: "Countries");
 
             migrationBuilder.DropTable(
                 name: "Register");
