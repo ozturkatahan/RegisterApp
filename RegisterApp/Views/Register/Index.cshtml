@@ -1,0 +1,75 @@
+﻿<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <title>Register Page</title>
+    <body>
+        <form>
+
+            <div class="form-group">
+                <label for="inputName">Name</label>
+                <input type="text" class="form-control col-xl-4" id="firstName" placeholder="First name">
+            </div>
+            <div class="form-group">
+                <label for="inputSurname">Surname</label>
+                <input type="text" class="form-control col-xl-4" id="lastName" placeholder="Last name">
+            </div>
+
+            <div class="form-group">
+                <label for="inputEmail">Email</label>
+                <input type="email" class="form-control col-xl-4" id="inputEmail4" placeholder="Email">
+            </div>
+            <div class="form-group">
+                <label for="inputPassword">Password</label>
+                <input type="password" class="form-control col-xl-4" id="inputPassword4" placeholder="Password">
+            </div>
+
+            <div class="form-row align-items-center">
+                <div class="col-auto my-1">
+                    <label class="mr-sm-2 sr-only" for="countrySelect">Country</label>
+                    <select class="custom-select mr-sm-2" id="countrySelect">
+                        <option selected>Country</option>
+                        <option value="1">Türkiye</option>
+                        <option value="2">Almanya</option>
+                        <option value="3">Fransa</option>
+                    </select>
+                </div>
+                <div class="col-auto my-1">
+                    <label class="mr-sm-2 sr-only" for="citySelect">City</label>
+                    <select class="custom-select mr-sm-2" id="citySelect">
+                        <option selected>City</option>
+                        <option value="1">Ankara</option>
+                        <option value="2">İstanbul</option>
+                        <option value="3">İzmir</option>
+                    </select>
+                </div>
+                <div class="col-auto my-1">
+                    <label class="mr-sm-2 sr-only" for="stateSelect">State</label>
+                    <select class="custom-select mr-sm-2" id="stateSelect">
+                        <option selected>State</option>
+                        <option value="1">Çankaya</option>
+                        <option value="2">Mamak</option>
+                        <option value="3">Keçiören</option>
+                    </select>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Next</button>
+        </form>
+
+        <form>
+            <fieldset disabled>
+                <div class="form-group">
+                    <label for="disabledTextInput">Ülke</label>
+                    <input type="text" id="disabledTextInput" class="form-control" placeholder="Disabled input">
+                </div>
+                <div class="form-group">
+                    <label for="disabledTextInput">Şehir</label>
+                    <input type="text" id="disabledTextInput" class="form-control" placeholder="Disabled input">
+                </div>
+            </fieldset>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </body>
+   
+
+</head>
+</html>
