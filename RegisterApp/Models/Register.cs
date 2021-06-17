@@ -10,11 +10,10 @@ namespace RegisterApp.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
-        public string Email { get; set; }
         public string Password { get; set; }
-        public string Country { get; set; }
-        public string telNo { get; set; }
-        public string City { get; set; }
-        public string State { get; set; }
+        public List<Country> Country { get; set; } = new List<Country>();
+        public List<City> City { get; set; } = new List<City>();
+        public List<Email> EmailAdress { get; set; } = new List<Email>();
+        public List<Telephone> Telephone { get; set; } = new List<Telephone>();
     }
 }
