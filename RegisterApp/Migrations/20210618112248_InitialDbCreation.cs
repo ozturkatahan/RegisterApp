@@ -2,7 +2,7 @@
 
 namespace RegisterApp.Migrations
 {
-    public partial class InitialDBCreation : Migration
+    public partial class InitialDbCreation : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

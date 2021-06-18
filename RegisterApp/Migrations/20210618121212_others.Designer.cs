@@ -10,8 +10,8 @@ using RegisterApp.DataAccess;
 namespace RegisterApp.Migrations
 {
     [DbContext(typeof(RegisterContext))]
-    [Migration("20210617123220_InitialDBCreation")]
-    partial class InitialDBCreation
+    [Migration("20210618121212_others")]
+    partial class others
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

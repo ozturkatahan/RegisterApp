@@ -25,12 +25,10 @@
         <div class="form-row align-items-center">
             <div class="col-auto my-1">
                 <label class="mr-sm-2 sr-only" for="countrySelect">Country</label>
-                <select class="custom-select mr-sm-2" id="countrySelect">
-                    <option selected>Country</option>
-                    <option value="1">Türkiye</option>
-                    <option value="2">Almanya</option>
-                    <option value="3">Fransa</option>
-                </select>
+                <div>
+                    @*@Html.DropDownList("Country", null, "Ülke Seç", new { @class = "form-control" })*@
+                    @Html.DropDownList("Country", "Ülke Seç")
+                </div>
             </div>
             <div class="col-auto my-1">
                 <label class="mr-sm-2 sr-only" for="citySelect">City</label>

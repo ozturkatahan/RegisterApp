@@ -28,6 +28,13 @@ namespace RegisterApp
             {
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
+           
+            services.AddScoped<EfCoreRegisterRepository>();
+            services.AddScoped<EfCoreEmailRepository>();
+            services.AddScoped<EfCoreCityRepository>();
+            services.AddScoped<EfCoreCountryRepository>();
+            services.AddScoped<EfCoreStateRepository>();
+            services.AddScoped<EfCoreTelephoneRepository>();
             services.AddControllersWithViews();
         }
 
